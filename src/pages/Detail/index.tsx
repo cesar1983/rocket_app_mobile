@@ -26,6 +26,7 @@ interface Data {
     city: string;
     uf: string;
     image: string;
+    imagePath: string;
     latitude: string;
     longitude: string;
   };
@@ -81,7 +82,7 @@ const Detail = () => {
         <Image
           style={styles.pointImage}
           source={{
-            uri: data.point.image,
+            uri: data.point.imagePath,
           }}
         />
 
