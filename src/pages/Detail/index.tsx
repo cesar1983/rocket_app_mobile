@@ -19,22 +19,22 @@ interface Params {
 }
 
 interface Data {
-  point: {
-    name: string;
-    email: string;
-    whatsapp: string;
-    city: string;
-    uf: string;
-    image: string;
-    imagePath: string;
-    latitude: string;
-    longitude: string;
-  };
-  items: {
-    id: number;
-    title: string;
-    image: string;
-  }[];
+  name: string;
+  email: string;
+  whatsapp: string;
+  city: string;
+  uf: string;
+  image: string;
+  imagePath: string;
+  latitude: string;
+  longitude: string;
+  items: [
+    {
+      id: number;
+      title: string;
+      image: string;
+    }
+  ];
 }
 
 const Detail = () => {
@@ -59,17 +59,16 @@ const Detail = () => {
   function handleMailCompose() {
     MailComposer.composeAsync({
       subject: "Ponto de Coleta",
-      recipients: [data.point.email],
     });
   }
 
   function handleWhatsapp() {
     Linking.openURL(
-      `whatsapp://send?phone=${data.point.whatsapp}&text=Interesse no ponto de coleta`
+      `whatsapp://send?phone=${data.whatsapp}&text=Interesse no ponto de coleta`
     );
   }
 
-  if (!data.point) {
+  if (!data) {
     return null;
   }
 
@@ -82,11 +81,11 @@ const Detail = () => {
         <Image
           style={styles.pointImage}
           source={{
-            uri: data.point.imagePath,
+            uri: data.imagePath,
           }}
         />
 
-        <Text style={styles.pointName}>{data.point.name}</Text>
+        <Text style={styles.pointName}>{data.name}</Text>
         <Text style={styles.pointItems}>
           {data.items.map((item) => item.title).join(",")}
         </Text>
@@ -94,7 +93,7 @@ const Detail = () => {
         <View style={styles.address}>
           <Text style={styles.addressTitle}>Endereço</Text>
           <Text style={styles.addressContent}>
-            {data.point.city} - {data.point.uf}
+            {data.city} - {data.uf}
           </Text>
         </View>
       </View>
